@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de Rifa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #0056b3;
+            padding: 10px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        nav ul li a:hover {
+            background-color: #007BFF;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .raffle-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .raffle-item h3 {
+            margin: 0 0 10px;
+        }
+        .raffle-item p {
+            margin: 5px 0;
+        }
+        .raffle-item button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .raffle-item button:hover {
+            background-color: #218838;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+        }
+        .add-raffle {
+            display: none;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .add-raffle input, .add-raffle button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .add-raffle button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .add-raffle button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo ao Site de Rifa</h1>
+        <p>Participe e concorra a prêmios incríveis!</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showAddRaffle()">Adicionar Rifa</a></li>
+            <li><a href="#raffles">Ver Rifas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="add-raffle" id="addRaffleSection">
+            <h3>Adicionar uma Nova Rifa</h3>
+            <input type="text" id="raffleName" placeholder="Nome do prêmio">
+            <input type="text" id="raffleDescription" placeholder="Descrição do prêmio">
+            <input type="number" id="raffleValue" placeholder="Valor do bilhete (R$)">
+            <button onclick="addRaffle()">Adicionar Rifa</button>
+        </div>
+        <div id="raffles">
+            <div class="raffle-item">
+                <h3>Prêmio: Smartphone</h3>
+                <p>Descrição: Um smartphone de última geração.</p>
+                <p>Valor do bilhete: R$ 10,00</p>
+                <button onclick="participar('Smartphone', 10)">Participar</button>
+            </div>
+            <div class="raffle-item">
+                <h3>Prêmio: Bicicleta</h3>
+                <p>Descrição: Uma bicicleta para todas as idades.</p>
+                <p>Valor do bilhete: R$ 5,00</p>
+                <button onclick="participar('Bicicleta', 5)">Participar</button>
+            </div>
+            <div class="raffle-item">
+                <h3>Prêmio: Televisão</h3>
+                <p>Descrição: Uma Smart TV 4K.</p>
+                <p>Valor do bilhete: R$ 20,00</p>
+                <button onclick="participar('Televisão', 20)">Participar</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Site de Rifa. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function participar(premio, valor) {
+            alert(`Você está participando da rifa para: ${premio} \nValor: R$ ${valor},00`);
+        }
+
+        function addRaffle() {
+            const name = document.getElementById('raffleName').value;
+            const description = document.getElementById('raffleDescription').value;
+            const value = document.getElementById('raffleValue').value;
+
+            if (!name || !description || !value) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            const rafflesDiv = document.getElementById('raffles');
+            const newRaffle = document.createElement('div');
+            newRaffle.classList.add('raffle-item');
+            newRaffle.innerHTML = `
+                <h3>Prêmio: ${name}</h3>
+                <p>Descrição: ${description}</p>
+                <p>Valor do bilhete: R$ ${value},00</p>
+                <button onclick="participar('${name}', ${value})">Participar</button>
+            `;
+
+            rafflesDiv.appendChild(newRaffle);
+
+            document.getElementById('raffleName').value = '';
+            document.getElementById('raffleDescription').value = '';
+            document.getElementById('raffleValue').value = '';
+        }
+
+        function showAddRaffle() {
+            const addRaffleSection = document.getElementById('addRaffleSection');
+            addRaffleSection.style.display = addRaffleSection.style.display === 'none' || addRaffleSection.style.display === '' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
